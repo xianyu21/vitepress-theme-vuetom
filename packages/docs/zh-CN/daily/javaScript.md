@@ -13,3 +13,15 @@ new Date().toISOString();
 (!(~+[])+{})[--[~+""][+[]]*[~+[]] + ~~!+[]]+({}+[])[[~!+[]]*~+[]]
 
 ```
+## Array.isArray()
+Array.isArray() 是 ES6 新增的方法，专门用于数组类型判断，原理同上。
+```
+let arr = []
+console.log(Array.isArray(arr)) // true
+```
+修改原型链不会对它造成任何影响。
+```
+let arr = []
+arr.__proto__ = function() {}
+console.log(Array.isArray(arr)) // true
+```

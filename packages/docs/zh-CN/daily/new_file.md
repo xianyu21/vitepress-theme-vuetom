@@ -70,4 +70,51 @@ this.$u.api.getDictList().then(res => {
 			  this.router.back()
 			}
 			
+// 获取折扣 -- 使用对象配置/策略模式
+const getDiscount = (userKey) => {
+    // 我们可以根据用户类型来生成我们的折扣对象
+    let discounts = {
+        '普通会员': 0.9,
+        '年费会员': 0.85,
+        '超级会员': 0.8,
+        'default': 1
+    }
+    return discounts[userKey] || discounts['default']
+}
+console.log(getDiscount('普通会员')) // 0.9
 
+// 获取折扣 -- 使用对象配置/策略模式
+const getDiscount = (userKey) => {
+    // 我们可以根据用户类型来生成我们的折扣对象
+    let discounts = new Map([
+        ['普通会员', 0.9],
+        ['年费会员', 0.85],
+        ['超级会员', 0.8],
+        ['default', 1]
+    ])
+    return discounts.get(userKey) || discounts.get('default')
+}
+console.log(getDiscount('普通会员')) // 0.9
+
+let strategies = new Map([
+    ['A', 4],
+    ['B', 3],
+    ['C', 2]
+])
+const calculateBonus = (performanceLevel, salary) => { 
+    return strategies.get(performanceLevel) * salary
+}
+calculateBonus( 'B', 20000 ) // 输出：60000
+// 以绩效_部门的方式拼接键值存入
+let strategies = new Map([
+    ['A_D', 4 * 1.2],
+    ['B_D', 3 * 1.2],
+    ['C_D', 2 * 1.2],
+    ['A_F', 4 * 0.9],
+    ['B_F', 3 * 0.9],
+    ['C_F', 2 * 0.9]
+])
+const calculateBonus = (performanceLevel, salary, department) => { 
+    return strategies.get(`${performanceLevel}_${department}`) * salary
+}
+calculateBonus( 'B', 20000, 'D' ) // 输出：72000
